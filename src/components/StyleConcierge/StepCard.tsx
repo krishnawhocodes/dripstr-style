@@ -137,7 +137,7 @@ const StepCard = ({ stepNumber, question, helperText, options, type = "chips", a
       {(analysisDone || !analysisText) && (
         <>
           <h3 className="text-xl md:text-2xl font-display font-semibold text-foreground mb-1" style={{ lineHeight: "1.2" }}>
-            <TypewriterText text={question} speed={40} onComplete={() => setQuestionDone(true)} />
+            <TypewriterText text={question} speed={30} onComplete={() => setQuestionDone(true)} />
           </h3>
 
           {helperText && questionDone && (

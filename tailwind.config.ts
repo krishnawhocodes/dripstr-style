@@ -67,8 +67,8 @@ export default {
           to: { height: "0" },
         },
         "fade-up": {
-          "0%": { opacity: "0", transform: "translateY(20px) scale(0.98)", filter: "blur(3px)" },
-          "100%": { opacity: "1", transform: "translateY(0) scale(1)", filter: "blur(0)" },
+          "0%": { opacity: "0", transform: "translateY(12px) scale(0.99)" },
+          "100%": { opacity: "1", transform: "translateY(0) scale(1)" },
         },
         "fade-in": {
           "0%": { opacity: "0" },

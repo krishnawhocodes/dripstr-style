@@ -52,7 +52,7 @@ const Index = () => {
   // Build analysis text for step 5 (occasion) based on photo answer
   const getAnalysisText = (stepKey: string): string | undefined => {
     if (stepKey === "occasion" && answers.photo && answers.photo !== "Skipped") {
-      return "Based on your photo analysis — warm tones suit your palette, and relaxed silhouettes complement your frame beautifully. Let's find the perfect occasion match.";
+      return "✨ Love what we see — warm tones look stunning on you, and relaxed fits are totally your thing. Now let's match this vibe to the perfect occasion!";
     }
     return undefined;
   };

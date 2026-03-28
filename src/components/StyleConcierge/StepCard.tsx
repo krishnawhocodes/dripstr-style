@@ -127,8 +127,11 @@ const StepCard = ({ stepNumber, question, helperText, options, type = "chips", a
 
       {/* Analysis text before question */}
       {analysisText && (
-        <div className="mb-4 px-4 py-3 rounded-xl bg-primary/5 border border-primary/10">
-          <p className="text-xs text-primary font-medium">
+        <div className="mb-4 px-4 py-3.5 rounded-2xl" style={{
+          background: "linear-gradient(135deg, hsla(18,100%,50%,0.08), hsla(30,100%,60%,0.05))",
+          border: "1px solid hsla(18,100%,50%,0.12)"
+        }}>
+          <p className="text-sm text-foreground/90 font-medium leading-relaxed">
             <TypewriterText text={analysisText} speed={20} onComplete={() => setAnalysisDone(true)} />
           </p>
         </div>

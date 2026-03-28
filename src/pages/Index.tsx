@@ -61,7 +61,7 @@ const Index = () => {
     setAnswers(prev => ({ ...prev, [key]: value }));
     setCurating(true);
 
-    const delay = key === "photo" ? 800 : 500;
+    const delay = key === "photo" ? 600 : 300;
 
     setTimeout(() => {
       setCurating(false);

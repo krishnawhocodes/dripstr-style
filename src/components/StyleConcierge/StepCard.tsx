@@ -128,8 +128,8 @@ const StepCard = ({ stepNumber, question, helperText, options, type = "chips", a
       {/* Analysis text before question */}
       {analysisText && (
         <div className="mb-4 px-4 py-3 rounded-xl bg-primary/5 border border-primary/10">
-          <p className="text-xs text-primary/80 font-medium">
-            <TypewriterText text={analysisText} speed={25} onComplete={() => setAnalysisDone(true)} />
+          <p className="text-xs text-primary font-medium">
+            <TypewriterText text={analysisText} speed={20} onComplete={() => setAnalysisDone(true)} />
           </p>
         </div>
       )}

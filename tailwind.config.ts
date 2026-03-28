@@ -67,8 +67,8 @@ export default {
           to: { height: "0" },
         },
         "fade-up": {
-          "0%": { opacity: "0", transform: "translateY(20px) scale(0.98)", filter: "blur(3px)" },
-          "100%": { opacity: "1", transform: "translateY(0) scale(1)", filter: "blur(0)" },
+          "0%": { opacity: "0", transform: "translateY(12px) scale(0.99)" },
+          "100%": { opacity: "1", transform: "translateY(0) scale(1)" },
         },
         "fade-in": {
           "0%": { opacity: "0" },
@@ -99,7 +99,7 @@ export default {
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
-        "fade-up": "fade-up 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards",
+        "fade-up": "fade-up 0.5s cubic-bezier(0.22, 1, 0.36, 1) forwards",
         "fade-in": "fade-in 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards",
         "stagger-in": "stagger-in 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards",
         "hero-glow": "hero-glow 4s ease-in-out infinite",

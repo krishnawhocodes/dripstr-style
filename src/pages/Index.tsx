@@ -10,17 +10,19 @@ interface Answers {
   photo: string | null;
   vibe: string | null;
   category: string | null;
+  occasion: string | null;
   priceRange: string | null;
 }
 
-const INITIAL: Answers = { gender: null, photo: null, vibe: null, category: null, priceRange: null };
+const INITIAL: Answers = { gender: null, photo: null, vibe: null, category: null, occasion: null, priceRange: null };
 
 const STEPS = [
   { key: "gender" as const, stepNumber: 1, question: "Who are we styling for?", options: ["Women", "Men"], type: "chips" as const },
   { key: "photo" as const, stepNumber: 2, question: "Want a sharper match?", helperText: "Optional — adds palette + fit cues. Takes 10 seconds.", type: "photo" as const },
   { key: "vibe" as const, stepNumber: 3, question: "Pick your vibe", options: ["Streetwear", "Minimal", "Daily", "Thrift", "Fusion"], type: "chips" as const },
   { key: "category" as const, stepNumber: 4, question: "Choose a category", options: ["Tops & Dresses", "Cargo & Pants", "Tees", "Shorts & Skirts", "Sweatshirts & Hoodies", "Jackets", "Cord Set", "Athleisure"], type: "chips" as const },
-  { key: "priceRange" as const, stepNumber: 5, question: "Choose your range", options: ["Under ₹300", "₹300–₹500", "₹500+"], type: "chips" as const },
+  { key: "occasion" as const, stepNumber: 5, question: "Tell us more about the occasion", helperText: "Help us understand where you'll rock this look.", type: "prompt" as const },
+  { key: "priceRange" as const, stepNumber: 6, question: "Choose your range", options: ["Under ₹300", "₹300–₹500", "₹500+"], type: "chips" as const },
 ];
 
 const Index = () => {
@@ -47,9 +49,19 @@ const Index = () => {
     };
   }, [isCompact]);
 
+  // Build analysis text for step 5 (occasion) based on photo answer
+  const getAnalysisText = (stepKey: string): string | undefined => {
+    if (stepKey === "occasion" && answers.photo && answers.photo !== "Skipped") {
+      return "Based on your photo analysis — warm tones suit your palette, and relaxed silhouettes complement your frame beautifully. Let's find the perfect occasion match.";
+    }
+    return undefined;
+  };
+
   const handleAnswer = useCallback((key: keyof Answers, value: string) => {
     setAnswers(prev => ({ ...prev, [key]: value }));
     setCurating(true);
+
+    const delay = key === "photo" ? 800 : 500;
 
     setTimeout(() => {
       setCurating(false);
@@ -61,10 +73,23 @@ const Index = () => {
         setTimeout(() => {
           setCurating(false);
           setShowResults(true);
-        }, 1200);
+        }, 1000);
       }
-    }, 1000);
+    }, delay);
   }, [activeStep]);
+
+  const handleEditStep = useCallback((stepIndex: number) => {
+    // Clear answers from this step onwards
+    const keysToReset = STEPS.slice(stepIndex).map(s => s.key);
+    setAnswers(prev => {
+      const updated = { ...prev };
+      keysToReset.forEach(k => { updated[k] = null; });
+      return updated;
+    });
+    setActiveStep(stepIndex);
+    setShowResults(false);
+    setCurating(false);
+  }, []);
 
   const handleRestart = useCallback(() => {
     setAnswers(INITIAL);
@@ -83,15 +108,11 @@ const Index = () => {
   };
 
   const handleChangeVibe = () => {
-    setAnswers(prev => ({ ...prev, vibe: null, category: null, priceRange: null }));
-    setActiveStep(2);
-    setShowResults(false);
+    handleEditStep(2);
   };
 
   const handleChangeCategory = () => {
-    setAnswers(prev => ({ ...prev, category: null, priceRange: null }));
-    setActiveStep(3);
-    setShowResults(false);
+    handleEditStep(3);
   };
 
   return (
@@ -101,7 +122,7 @@ const Index = () => {
       <div className="relative z-10 max-w-2xl mx-auto px-4 md:px-6">
         <Hero compact={isCompact} />
 
-        <div ref={flowRef} className="space-y-4 pb-8">
+        <div ref={flowRef} className="space-y-3 pb-8">
           {STEPS.map((step, i) => {
             const answerValue = answers[step.key];
             const isAnswered = answerValue !== null;
@@ -119,7 +140,9 @@ const Index = () => {
                 type={step.type}
                 answered={isAnswered ? answerValue : undefined}
                 onAnswer={(val) => handleAnswer(step.key, val)}
+                onEdit={isAnswered ? () => handleEditStep(i) : undefined}
                 isActive={isActive}
+                analysisText={getAnalysisText(step.key)}
               />
             );
           })}

@@ -87,9 +87,8 @@ export default {
           "50%": { opacity: "0.8" },
         },
         "dripstr-glow": {
-          "0%": { transform: "scale(1)", filter: "drop-shadow(0 0 0px hsla(18,100%,50%,0))" },
-          "50%": { transform: "scale(1.05)", filter: "drop-shadow(0 0 20px hsla(18,100%,50%,0.5))" },
-          "100%": { transform: "scale(1)", filter: "drop-shadow(0 0 0px hsla(18,100%,50%,0))" },
+          "0%, 100%": { opacity: "0.94", transform: "scale(1)" },
+          "50%": { opacity: "1", transform: "scale(1.03)" },
         },
         "slide-collapse": {
           "0%": { opacity: "1", transform: "scale(1)", maxHeight: "400px" },
@@ -99,12 +98,12 @@ export default {
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
-        "fade-up": "fade-up 0.5s cubic-bezier(0.22, 1, 0.36, 1) forwards",
-        "fade-in": "fade-in 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards",
-        "stagger-in": "stagger-in 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards",
+        "fade-up": "fade-up 0.38s cubic-bezier(0.22, 1, 0.36, 1) forwards",
+        "fade-in": "fade-in 0.38s cubic-bezier(0.16, 1, 0.3, 1) forwards",
+        "stagger-in": "stagger-in 0.42s cubic-bezier(0.16, 1, 0.3, 1) forwards",
         "hero-glow": "hero-glow 4s ease-in-out infinite",
         "pulse-soft": "pulse-soft 1.5s ease-in-out infinite",
-        "dripstr-glow": "dripstr-glow 3s ease-in-out infinite",
+        "dripstr-glow": "dripstr-glow 2.8s ease-in-out infinite",
       },
     },
   },

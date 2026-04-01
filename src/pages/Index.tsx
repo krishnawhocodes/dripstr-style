@@ -33,10 +33,11 @@ const Index = () => {
   const [bagCount, setBagCount] = useState(0);
   const flowRef = useRef<HTMLDivElement>(null);
 
-  const isCompact = activeStep > 0 || showResults;
+  const isCompact = activeStep > 1 || showResults;
+  const shouldLockViewport = activeStep === 0 && !curating && !showResults;
 
   useEffect(() => {
-    if (!isCompact) {
+    if (shouldLockViewport) {
       document.documentElement.style.overflow = 'hidden';
       document.body.style.overflow = 'hidden';
     } else {
@@ -47,7 +48,7 @@ const Index = () => {
       document.documentElement.style.overflow = '';
       document.body.style.overflow = '';
     };
-  }, [isCompact]);
+  }, [shouldLockViewport]);
 
   // Build analysis text for step 5 (occasion) based on photo answer
   const getAnalysisText = (stepKey: string): string | undefined => {
@@ -59,23 +60,21 @@ const Index = () => {
 
   const handleAnswer = useCallback((key: keyof Answers, value: string) => {
     setAnswers(prev => ({ ...prev, [key]: value }));
-    setCurating(true);
+    const nextStep = activeStep + 1;
 
-    const delay = key === "photo" ? 600 : 300;
-
-    setTimeout(() => {
-      setCurating(false);
-      const nextStep = activeStep + 1;
-      if (nextStep < STEPS.length) {
+    if (nextStep < STEPS.length) {
+      const delay = key === "photo" ? 150 : 90;
+      window.setTimeout(() => {
         setActiveStep(nextStep);
-      } else {
-        setCurating(true);
-        setTimeout(() => {
-          setCurating(false);
-          setShowResults(true);
-        }, 1000);
-      }
-    }, delay);
+      }, delay);
+      return;
+    }
+
+    setCurating(true);
+    window.setTimeout(() => {
+      setCurating(false);
+      setShowResults(true);
+    }, 700);
   }, [activeStep]);
 
   const handleEditStep = useCallback((stepIndex: number) => {
@@ -122,7 +121,10 @@ const Index = () => {
       <div className="relative z-10 max-w-2xl mx-auto px-4 md:px-6">
         <Hero compact={isCompact} />
 
-        <div ref={flowRef} className="space-y-3 pb-8">
+        <div
+          ref={flowRef}
+          className={`space-y-3 pb-8 smooth-layer transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] ${isCompact ? '-translate-y-8 md:-translate-y-10' : 'translate-y-0'}`}
+        >
           {STEPS.map((step, i) => {
             const answerValue = answers[step.key];
             const isAnswered = answerValue !== null;

@@ -26,11 +26,23 @@ const StepCard = ({ stepNumber, question, helperText, options, type = "chips", a
   const inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
-    if (isActive && cardRef.current) {
-      setTimeout(() => {
-        cardRef.current?.scrollIntoView({ behavior: "smooth", block: "center" });
-      }, 150);
-    }
+    if (!isActive || !cardRef.current) return;
+
+    const frame = window.requestAnimationFrame(() => {
+      const card = cardRef.current;
+      if (!card) return;
+
+      const rect = card.getBoundingClientRect();
+      const topBoundary = 88;
+      const bottomBoundary = window.innerHeight - 24;
+      const isFullyVisible = rect.top >= topBoundary && rect.bottom <= bottomBoundary;
+
+      if (!isFullyVisible) {
+        card.scrollIntoView({ behavior: "smooth", block: "nearest" });
+      }
+    });
+
+    return () => window.cancelAnimationFrame(frame);
   }, [isActive]);
 
   useEffect(() => {
@@ -46,7 +58,7 @@ const StepCard = ({ stepNumber, question, helperText, options, type = "chips", a
     return (
       <div
         ref={cardRef}
-        className="glass-card rounded-xl px-5 py-4 opacity-60 hover:opacity-80"
+        className="glass-card smooth-layer rounded-xl px-5 py-4 opacity-60 hover:opacity-80"
         style={{ transition: "all 0.4s cubic-bezier(0.16, 1, 0.3, 1)" }}
       >
         <div className="flex items-center justify-between gap-3">
@@ -118,7 +130,7 @@ const StepCard = ({ stepNumber, question, helperText, options, type = "chips", a
   return (
     <div
       ref={cardRef}
-      className="glass-card rounded-2xl p-6 md:p-8 animate-fade-up"
+      className="glass-card smooth-layer rounded-2xl p-6 md:p-8 animate-fade-up"
       style={{ animationDuration: "0.5s" }}
     >
       <span className="text-[10px] tracking-[0.3em] text-primary uppercase font-semibold mb-4 block">

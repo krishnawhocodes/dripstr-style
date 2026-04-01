@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 interface TypewriterTextProps {
   text: string;
@@ -8,28 +8,39 @@ interface TypewriterTextProps {
 }
 
 const TypewriterText = ({ text, className = "", speed = 38, onComplete }: TypewriterTextProps) => {
-  const [displayedWords, setDisplayedWords] = useState<string[]>([]);
-  const words = text.split(" ");
+  const [visibleWordCount, setVisibleWordCount] = useState(0);
+  const words = useMemo(() => text.split(" "), [text]);
+  const displayedText = useMemo(() => words.slice(0, visibleWordCount).join(" "), [visibleWordCount, words]);
 
   useEffect(() => {
-    setDisplayedWords([]);
-    let i = 0;
-    const interval = setInterval(() => {
-      if (i < words.length) {
-        setDisplayedWords(prev => [...prev, words[i]]);
-        i++;
-      } else {
-        clearInterval(interval);
-        onComplete?.();
+    setVisibleWordCount(0);
+
+    if (words.length === 0) {
+      onComplete?.();
+      return;
+    }
+
+    let nextCount = 0;
+    const interval = window.setInterval(() => {
+      nextCount += 1;
+
+      if (nextCount < words.length) {
+        setVisibleWordCount(nextCount);
+        return;
       }
+
+      setVisibleWordCount(words.length);
+      window.clearInterval(interval);
+      onComplete?.();
     }, speed);
-    return () => clearInterval(interval);
-  }, [text]);
+
+    return () => window.clearInterval(interval);
+  }, [words, speed, onComplete]);
 
   return (
     <span className={className}>
-      {displayedWords.join(" ")}
-      {displayedWords.length < words.length && (
+      {displayedText}
+      {visibleWordCount < words.length && (
         <span className="inline-block w-[2px] h-[1em] bg-primary ml-1 align-middle" style={{ animation: "typewriter-cursor 0.8s step-end infinite" }} />
       )}
     </span>

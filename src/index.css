@@ -48,6 +48,10 @@
     @apply border-border;
   }
 
+  html {
+    scrollbar-gutter: stable;
+  }
+
   body {
     @apply bg-background text-foreground antialiased;
     font-family: 'Inter', system-ui, sans-serif;
@@ -78,13 +82,19 @@
   .glass-card {
     background: linear-gradient(
       135deg,
-      hsla(0, 0%, 10%, 0.8),
-      hsla(0, 0%, 6%, 0.9)
+      hsl(var(--glass-bg) / 0.8),
+      hsl(var(--background) / 0.92)
     );
-    border: 1px solid hsla(0, 0%, 20%, 0.5);
-    backdrop-filter: blur(20px);
+    border: 1px solid hsl(var(--glass-border) / 0.5);
+    backdrop-filter: blur(14px);
     box-shadow: 0 8px 32px hsla(0, 0%, 0%, 0.4),
                 inset 0 1px 0 hsla(0, 0%, 100%, 0.05);
+  }
+
+  .smooth-layer {
+    transform: translate3d(0, 0, 0);
+    will-change: transform, opacity;
+    backface-visibility: hidden;
   }
 
   .grain-overlay {

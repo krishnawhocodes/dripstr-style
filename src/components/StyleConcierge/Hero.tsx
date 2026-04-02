@@ -16,7 +16,7 @@ const Hero = ({ compact }: { compact?: boolean }) => {
       />
 
       <div
-        className={`smooth-layer relative z-10 flex flex-col items-center transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] ${compact ? "-translate-y-6 scale-[0.78] md:-translate-y-8 md:scale-[0.84]" : "translate-y-0 scale-100"}`}
+        className={`smooth-layer relative z-10 flex flex-col items-center transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] ${compact ? "-translate-y-4 scale-[0.55] md:-translate-y-6 md:scale-[0.6]" : "translate-y-0 scale-100"}`}
       >
         <h1
           className={`smooth-layer font-display font-bold tracking-tight text-foreground text-4xl md:text-6xl lg:text-7xl transition-[transform,opacity] duration-500 ${visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"}`}

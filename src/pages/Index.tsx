@@ -116,7 +116,13 @@ const Index = () => {
 
   return (
     <div className={`bg-background grain-overlay corner-glow ${!isCompact ? 'h-screen overflow-hidden' : 'min-h-screen'}`}>
-      <TopBar bagCount={bagCount} onRestart={handleRestart} />
+      <TopBar
+        bagCount={bagCount}
+        onRestart={handleRestart}
+        currentStep={showResults ? 6 : activeStep}
+        totalSteps={6}
+        showProgress={activeStep >= 1 || showResults}
+      />
 
       <div className="relative z-10 max-w-2xl mx-auto px-4 md:px-6">
         <Hero compact={isCompact} />

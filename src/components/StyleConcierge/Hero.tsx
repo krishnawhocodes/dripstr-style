@@ -9,7 +9,7 @@ const Hero = ({ compact }: { compact?: boolean }) => {
   }, []);
 
   return (
-    <section className="relative flex min-h-[220px] flex-col items-center justify-center overflow-hidden pb-4 pt-24 text-center md:min-h-[280px] md:pb-6 md:pt-28">
+    <section className={`relative flex flex-col items-center justify-center overflow-hidden text-center transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] ${compact ? "min-h-[100px] pb-2 pt-16 md:min-h-[120px] md:pt-20" : "min-h-[220px] pb-4 pt-24 md:min-h-[280px] md:pb-6 md:pt-28"}`}>
       <div
         className={`smooth-layer pointer-events-none absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full animate-hero-glow transition-[transform,opacity] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] ${compact ? "h-[220px] w-[220px] scale-75 opacity-80 md:h-[320px] md:w-[320px]" : "h-[340px] w-[340px] scale-100 opacity-100 md:h-[500px] md:w-[500px]"}`}
         style={{ background: "radial-gradient(circle, hsl(var(--primary) / 0.12) 0%, transparent 70%)" }}

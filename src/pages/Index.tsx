@@ -33,7 +33,7 @@ const Index = () => {
   const [bagCount, setBagCount] = useState(0);
   const flowRef = useRef<HTMLDivElement>(null);
 
-  const isCompact = activeStep > 1 || showResults;
+  const isCompact = activeStep >= 1 || showResults;
   const shouldLockViewport = activeStep === 0 && !curating && !showResults;
 
   useEffect(() => {
